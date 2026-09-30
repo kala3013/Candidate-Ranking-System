@@ -1,0 +1,53 @@
+Job Title: Senior Data Scientist
+
+Location: Bangalore, India (Hybrid)
+Experience Required: 4+ years
+Employment Type: Full-time
+
+About the Role:
+We are seeking a highly skilled Senior Data Scientist to join our AI/ML team. You will work on solving complex business problems using cutting-edge machine learning, NLP, and deep learning techniques. The ideal candidate has a strong background in statistics, programming, and data-driven decision making.
+
+Required Skills:
+- Python programming
+- Machine Learning (supervised & unsupervised)
+- Deep Learning (CNNs, RNNs, Transformers)
+- Natural Language Processing
+- SQL and database querying
+- Statistical analysis and hypothesis testing
+- Data visualization (Matplotlib, Seaborn, Plotly)
+- Version control with Git
+- Experience with cloud platforms (AWS/Azure/GCP)
+
+Preferred Skills:
+- Experience with BERT, GPT, or Large Language Models
+- MLOps and model deployment
+- Apache Spark or big data technologies
+- A/B testing and experimental design
+- Docker and Kubernetes
+
+Education Requirements:
+- Master's or PhD in Computer Science, Data Science, Statistics, or related field
+- Bachelor's degree with exceptional experience also considered
+
+Responsibilities:
+- Design and develop machine learning models to solve business problems
+- Perform exploratory data analysis and feature engineering on large datasets
+- Deploy ML models to production using MLOps best practices
+- Collaborate with product managers and engineers to integrate AI capabilities
+- Communicate findings and insights to non-technical stakeholders
+- Mentor junior data scientists and contribute to team growth
+- Stay current with latest AI/ML research and technologies
+
+Soft Skills:
+- Excellent communication and presentation abilities
+- Strong analytical and problem-solving mindset
+- Team collaboration and cross-functional teamwork
+- Mentoring and knowledge sharing
+- Adaptability to fast-changing priorities
+
+Industry Domain: Technology / SaaS
+
+Certifications Preferred:
+- AWS Certified Machine Learning
+- Google Professional Data Engineer
+- TensorFlow Developer Certificate

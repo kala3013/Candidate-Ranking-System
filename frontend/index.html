@@ -1,0 +1,871 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Candidate Ranking System</title>
+    <meta name="description" content="AI-powered recruitment intelligence platform that ranks candidates using semantic embeddings, behavioral intelligence, and bias-free evaluation.">
+    <meta name="theme-color" content="#6c63ff">
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+</head>
+<body>
+    <!-- Particle Background -->
+    <div id="particles-canvas"></div>
+
+    <!-- Navigation -->
+    <nav class="navbar" id="navbar">
+        <div class="nav-brand">
+            <div class="brand-icon">
+                <svg width="32" height="32" viewBox="0 0 32 32" fill="none">
+                    <rect width="32" height="32" rx="8" fill="url(#brand-grad)"/>
+                    <path d="M8 22L12 10L16 18L20 8L24 22" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+                    <circle cx="20" cy="8" r="2" fill="white"/>
+                    <defs><linearGradient id="brand-grad" x1="0" y1="0" x2="32" y2="32"><stop stop-color="#6c63ff"/><stop offset="1" stop-color="#00d4ff"/></linearGradient></defs>
+                </svg>
+            </div>
+            <div class="brand-text">
+                <span class="brand-name">Candidate Ranking System</span>
+            </div>
+        </div>
+        <div class="nav-actions">
+            <div class="nav-stats">
+                <div class="nav-stat">
+                    <span class="nav-stat-value" id="navCandidates">0</span>
+                    <span class="nav-stat-label">Candidates</span>
+                </div>
+                <div class="nav-stat">
+                    <span class="nav-stat-value" id="navAnalyzed">0</span>
+                    <span class="nav-stat-label">Analyzed</span>
+                </div>
+                <div class="nav-stat">
+                    <span class="nav-stat-value" id="navShortlisted">0</span>
+                    <span class="nav-stat-label">Shortlisted</span>
+                </div>
+            </div>
+            <div class="nav-badge" id="modelStatus">
+                <span class="status-dot"></span>
+                <span id="modelStatusText">Initializing...</span>
+            </div>
+            <button class="btn-icon" onclick="toggleTheme()" title="Toggle Theme (Ctrl+Shift+T)">
+                <span id="themeIcon">🌙</span>
+            </button>
+        </div>
+    </nav>
+
+    <!-- Main Container -->
+    <div class="container">
+        <!-- Hero Section -->
+        <header class="hero-section glass">
+            <h1 class="hero-title">Find the <span class="gradient-text">Right Talent</span><br>Not Just Keywords</h1>
+            <p class="hero-subtitle">
+                An AI-powered recruitment intelligence platform that ranks candidates by understanding who truly fits the role — 
+                using semantic embeddings, behavioral intelligence, multi-dimensional scoring, bias-free evaluation, and explainable AI.
+            </p>
+            <div class="hero-metrics">
+                <div class="metric">
+                    <span class="metric-value" id="heroProcessed">0</span>
+                    <span class="metric-label">Candidates Processed</span>
+                </div>
+                <div class="metric-divider"></div>
+                <div class="metric">
+                    <span class="metric-value">11</span>
+                    <span class="metric-label">AI Modules</span>
+                </div>
+                <div class="metric-divider"></div>
+                <div class="metric">
+                    <span class="metric-value">7</span>
+                    <span class="metric-label">Scoring Dimensions</span>
+                </div>
+                <div class="metric-divider"></div>
+                <div class="metric">
+                    <span class="metric-value">⚖️</span>
+                    <span class="metric-label">Bias-Free</span>
+                </div>
+            </div>
+        </header>
+
+        <!-- Tab Navigation -->
+        <div class="tab-nav glass" id="tabNav">
+            <button class="tab-btn active" data-tab="upload" onclick="switchTab('upload')">
+                📋 Upload & Analyze
+            </button>
+            <button class="tab-btn" data-tab="rankings" onclick="switchTab('rankings')" id="tabRankings" disabled>
+                🏆 Rankings
+            </button>
+            <button class="tab-btn" data-tab="shortlist" onclick="switchTab('shortlist')" id="tabShortlist" disabled>
+                ⭐ Shortlist
+            </button>
+            <button class="tab-btn" data-tab="analytics" onclick="switchTab('analytics')" id="tabAnalytics" disabled>
+                📊 Analytics
+            </button>
+            <button class="tab-btn" data-tab="copilot" onclick="switchTab('copilot')" id="tabCopilot" disabled>
+                🤖 Copilot
+            </button>
+            <button class="tab-btn" data-tab="bias" onclick="switchTab('bias')" id="tabBias" disabled>
+                ⚖️ Bias-Free
+            </button>
+            <button class="tab-btn" data-tab="features" onclick="switchTab('features')" id="tabFeatures" disabled>
+                🚀 Pro Features
+            </button>
+        </div>
+
+        <!-- ========== TAB 1: UPLOAD ========== -->
+        <div class="tab-content active" id="tab-upload">
+            <!-- How It Works -->
+            <section class="steps-section" id="howItWorks">
+                <h2 class="section-title">How It Works</h2>
+                <div class="steps-grid">
+                    <div class="step-card glass">
+                        <div class="step-number">01</div>
+                        <div class="step-icon">📋</div>
+                        <h3>Upload Job Description</h3>
+                        <p>Paste text or upload PDF/DOCX — our AI reads <em>beyond</em> keywords to understand what the role actually needs.</p>
+                    </div>
+                    <div class="step-card glass">
+                        <div class="step-number">02</div>
+                        <div class="step-icon">👥</div>
+                        <h3>Upload Resumes</h3>
+                        <p>Batch upload candidate profiles in any format. The system extracts skills, experience, and behavioral signals.</p>
+                    </div>
+                    <div class="step-card glass">
+                        <div class="step-number">03</div>
+                        <div class="step-icon">🧠</div>
+                        <h3>AI Analysis</h3>
+                        <p>11 advanced modules evaluate candidates — semantic matching, skill gaps, potential scoring, bias-free, and more.</p>
+                    </div>
+                    <div class="step-card glass">
+                        <div class="step-number">04</div>
+                        <div class="step-icon">🏆</div>
+                        <h3>Get Results</h3>
+                        <p>Ranked candidates with detailed score breakdowns, skill gap analysis, interview questions, and AI summaries.</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Upload Section -->
+            <section class="upload-section" id="uploadSection">
+                <h2 class="section-title">Upload & Analyze</h2>
+                
+                <div class="upload-grid">
+                    <div class="upload-card glass" id="jdUploadCard">
+                        <div class="upload-card-header">
+                            <div class="upload-icon-wrapper jd">
+                                <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+                                    <polyline points="14 2 14 8 20 8"></polyline>
+                                    <line x1="16" y1="13" x2="8" y2="13"></line>
+                                    <line x1="16" y1="17" x2="8" y2="17"></line>
+                                </svg>
+                            </div>
+                            <h3>Job Description</h3>
+                            <p>PDF, DOCX, or TXT — or paste below</p>
+                        </div>
+                        <div class="upload-dropzone" id="jdDropzone">
+                            <input type="file" id="jdFile" accept=".pdf,.docx,.txt" onchange="handleJDFile(event)">
+                            <div class="dropzone-content">
+                                <div class="dropzone-icon">📂</div>
+                                <span>Drop file here or <span class="browse-link">browse</span></span>
+                                <small>Supports PDF, DOCX, TXT</small>
+                            </div>
+                        </div>
+                        <div class="file-status" id="jdFileInfo" style="display:none">
+                            <div class="file-status-icon">📄</div>
+                            <div class="file-status-details">
+                                <span class="file-name" id="jdFileName"></span>
+                                <span class="file-size" id="jdFileSize"></span>
+                            </div>
+                            <button class="file-remove" onclick="removeJDFile()">✕</button>
+                        </div>
+                    </div>
+
+                    <div class="upload-card glass" id="resumeUploadCard">
+                        <div class="upload-card-header">
+                            <div class="upload-icon-wrapper resumes">
+                                <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+                                    <circle cx="9" cy="7" r="4"></circle>
+                                    <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
+                                    <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+                                </svg>
+                            </div>
+                            <h3>Candidate Resumes</h3>
+                            <p>Upload multiple profiles (PDF/DOCX/TXT)</p>
+                        </div>
+                        <div class="upload-dropzone" id="resumeDropzone">
+                            <input type="file" id="resumeFiles" accept=".pdf,.docx,.txt" multiple onchange="handleResumeFiles(event)">
+                            <div class="dropzone-content">
+                                <div class="dropzone-icon">📦</div>
+                                <span>Drop files here or <span class="browse-link">browse</span></span>
+                                <small>Multiple files supported</small>
+                            </div>
+                        </div>
+                        <div class="file-status" id="resumeFileInfo" style="display:none">
+                            <div class="file-status-icon">📁</div>
+                            <div class="file-status-details">
+                                <span class="file-name" id="resumeCount"></span>
+                                <span class="file-size" id="resumeDetails"></span>
+                            </div>
+                            <button class="file-remove" onclick="removeResumes()">✕</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Progress Bar -->
+                <div class="progress-container glass" id="progressContainer">
+                    <div class="progress-bar-track">
+                        <div class="progress-bar-fill" id="progressFill" style="width:0%"></div>
+                    </div>
+                    <div class="progress-status">
+                        <span class="progress-label" id="progressLabel">Initializing...</span>
+                        <span id="progressPercent">0%</span>
+                    </div>
+                </div>
+
+                <div class="paste-section">
+                    <div class="paste-divider">
+                        <span>Or paste job description below</span>
+                    </div>
+                    <div class="textarea-wrapper">
+                        <textarea class="jd-textarea" id="jdText" 
+                            placeholder="Paste the full job description here... Include required skills, experience, education, and responsibilities for best results."
+                            oninput="updateCharCount()"></textarea>
+                        <div class="textarea-footer">
+                            <span class="char-count" id="charCount">0 characters</span>
+                            <span class="hint">Ctrl+Enter to submit</span>
+                        </div>
+                    </div>
+                </div>
+
+                <button class="analyze-btn" id="analyzeBtn" onclick="analyze()">
+                    <span class="btn-content">
+                        <span class="btn-icon">🚀</span>
+                        <span class="btn-text">Analyze & Rank Candidates</span>
+                    </span>
+                    <span class="btn-loader" style="display:none">
+                        <div class="loader-dots"><span></span><span></span><span></span></div>
+                        <span>Analyzing with AI...</span>
+                    </span>
+                </button>
+
+                <button class="sample-btn" onclick="runSample()" id="sampleBtn">
+                    <span class="btn-icon">🎯</span>
+                    Try with Sample Data
+                </button>
+
+                <p id="analyzeHint" class="analyze-hint" style="display:none"></p>
+            </section>
+        </div>
+
+        <!-- ========== TAB 2: RANKINGS ========== -->
+        <div class="tab-content" id="tab-rankings">
+            <div class="results-section active" id="resultsSection">
+                <div class="results-header glass">
+                    <div class="results-header-left">
+                        <h2>🏆 Ranked Candidates</h2>
+                        <span class="results-meta" id="resultsMeta">Analyze candidates to see results</span>
+                    </div>
+                    <div class="results-header-right">
+                        <div class="btn-group">
+                            <button class="btn-outline" onclick="exportJSON()" id="exportJSONBtn">
+                                <span>📋</span> Export JSON
+                            </button>
+                            <button class="btn-primary" id="downloadBtn" onclick="downloadCSV()" title="Download the latest ranked results as CSV">
+                                <span>📥</span> Download CSV
+                            </button>
+                            <button class="btn-outline" onclick="generatePdfReport()" id="pdfReportBtn">
+                                <span>📄</span> PDF Report
+                            </button>
+                            <button class="btn-outline" onclick="showSimilarityMatrix()">
+                                <span>🔗</span> Similarity
+                            </button>
+                            <button class="btn-outline" onclick="window.print()">
+                                <span>🖨️</span> Print
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Summary Dashboard -->
+                <div class="summary-dashboard glass">
+                    <div class="dashboard-header">
+                        <h3>📊 Analysis Summary</h3>
+                        <span class="dashboard-badge" id="analysisTime"></span>
+                    </div>
+                    <div class="dashboard-grid" id="summaryGrid">
+                        <div class="dashboard-stat">
+                            <div class="stat-icon-wrapper total">👥</div>
+                            <div class="stat-content">
+                                <span class="stat-number" id="totalCandidates">0</span>
+                                <span class="stat-desc">Total Candidates</span>
+                            </div>
+                        </div>
+                        <div class="dashboard-stat">
+                            <div class="stat-icon-wrapper top">🏆</div>
+                            <div class="stat-content">
+                                <span class="stat-number" id="topScore">0%</span>
+                                <span class="stat-desc">Top Score</span>
+                            </div>
+                        </div>
+                        <div class="dashboard-stat">
+                            <div class="stat-icon-wrapper avg">📊</div>
+                            <div class="stat-content">
+                                <span class="stat-number" id="avgScore">0%</span>
+                                <span class="stat-desc">Average Score</span>
+                            </div>
+                        </div>
+                        <div class="dashboard-stat">
+                            <div class="stat-icon-wrapper name">👤</div>
+                            <div class="stat-content">
+                                <span class="stat-number" id="topCandidate">-</span>
+                                <span class="stat-desc">Top Candidate</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Filters -->
+                <div class="filters-bar">
+                    <div class="filter-group">
+                        <span class="filter-label">🏷️</span>
+                        <input type="text" class="filter-input" id="filterName" placeholder="Search name..." oninput="applyFilters()">
+                    </div>
+                    <div class="filter-group">
+                        <span class="filter-label">📈 Score</span>
+                        <select class="filter-select" id="filterScoreRange" onchange="applyFilters()">
+                            <option value="all">All Scores</option>
+                            <option value="excellent">Excellent (80%+)</option>
+                            <option value="good">Good (60-80%)</option>
+                            <option value="moderate">Moderate (40-60%)</option>
+                            <option value="low">Low (<40%)</option>
+                        </select>
+                    </div>
+                    <div class="filter-group">
+                        <span class="filter-label">💼 Exp</span>
+                        <select class="filter-select" id="filterExperience" onchange="applyFilters()">
+                            <option value="all">All Levels</option>
+                            <option value="senior">Senior (7+ yrs)</option>
+                            <option value="mid">Mid (3-6 yrs)</option>
+                            <option value="junior">Junior (1-2 yrs)</option>
+                            <option value="entry">Entry (<1 yr)</option>
+                        </select>
+                    </div>
+                    <div class="filter-group">
+                        <span class="filter-label">⭐ Shortlist</span>
+                        <select class="filter-select" id="filterShortlist" onchange="applyFilters()">
+                            <option value="all">All Candidates</option>
+                            <option value="shortlisted">Shortlisted Only</option>
+                            <option value="not">Not Shortlisted</option>
+                        </select>
+                    </div>
+                    <button class="filter-clear" onclick="clearFilters()">✕ Clear Filters</button>
+                </div>
+
+                <!-- Ranking Table -->
+                <div class="table-section glass">
+                    <div class="table-header">
+                        <h3>📋 Detailed Rankings</h3>
+                        <div class="table-header-right">
+                            <span class="sort-indicator" id="sortIndicator">Sort: Rank ↑</span>
+                            <span class="filter-badge" id="filterBadge" style="display:none"></span>
+                        </div>
+                    </div>
+                    <div class="table-container">
+                        <table class="ranking-table" id="rankingTable">
+                            <thead>
+                                <tr>
+                                    <th class="col-checkbox"></th>
+                                    <th class="col-rank" onclick="sortBy('rank')">Rank <span class="sort-icon">↕</span></th>
+                                    <th class="col-name" onclick="sortBy('name')">Candidate <span class="sort-icon">↕</span></th>
+                                    <th class="col-score" onclick="sortBy('score')">AI Match <span class="sort-icon">↕</span></th>
+                                    <th class="col-bar">Skill</th>
+                                    <th class="col-bar">Experience</th>
+                                    <th class="col-bar">Semantic</th>
+                                    <th class="col-reason">Why</th>
+                                    <th class="col-potential">Potential</th>
+                                    <th class="col-star">⭐</th>
+                                    <th class="col-action">Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody id="rankingBody">
+                                <tr class="empty-row">
+                                    <td colspan="11">
+                                        <div class="empty-state">
+                                            <div class="empty-icon">🔍</div>
+                                            <h3>No results yet</h3>
+                                            <p>Upload resumes and the job description, then click analyze to see AI-powered rankings</p>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ========== TAB 3: SHORTLIST ========== -->
+        <div class="tab-content" id="tab-shortlist">
+            <div class="shortlist-section">
+                <div class="results-header glass">
+                    <div class="results-header-left">
+                        <h2>⭐ Shortlisted Candidates</h2>
+                        <span class="results-meta" id="shortlistMeta">Star candidates to add them here</span>
+                    </div>
+                    <div class="results-header-right">
+                        <button class="btn-outline" onclick="exportShortlist()">
+                            <span>📤</span> Export Shortlist
+                        </button>
+                        <button class="btn-outline" onclick="clearShortlist()" style="color:var(--danger)">
+                            <span>🗑️</span> Clear All
+                        </button>
+                    </div>
+                </div>
+
+                <div class="table-section glass">
+                    <div class="table-container">
+                        <table class="ranking-table" id="shortlistTable">
+                            <thead>
+                                <tr>
+                                    <th class="col-rank">Rank</th>
+                                    <th class="col-name">Candidate</th>
+                                    <th class="col-score">AI Match</th>
+                                    <th class="col-bar">Skill</th>
+                                    <th class="col-bar">Experience</th>
+                                    <th class="col-bar">Semantic</th>
+                                    <th class="col-reason">Why</th>
+                                    <th class="col-potential">Potential</th>
+                                    <th class="col-action">Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody id="shortlistBody">
+                                <tr class="empty-row">
+                                    <td colspan="9">
+                                        <div class="empty-state">
+                                            <div class="empty-icon">⭐</div>
+                                            <h3>No shortlisted candidates</h3>
+                                            <p>Star candidates from the Rankings tab to add them here</p>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ========== TAB 4: ANALYTICS ========== -->
+        <div class="tab-content" id="tab-analytics">
+            <div class="analytics-dashboard">
+                <h2 class="section-title">📊 Recruitment Analytics Dashboard</h2>
+                
+                <div class="analytics-grid" id="analyticsGrid">
+                    <!-- Score Distribution -->
+                    <div class="analytics-card glass">
+                        <div class="analytics-card-header">
+                            <h3>📈 Score Distribution</h3>
+                            <div class="chart-toggles">
+                                <button class="chart-toggle active" onclick="switchAnalyticsChart('bar', this)">Bar</button>
+                                <button class="chart-toggle" onclick="switchAnalyticsChart('doughnut', this)">Doughnut</button>
+                            </div>
+                        </div>
+                        <div class="chart-container" style="height:280px">
+                            <canvas id="scoreDistChart"></canvas>
+                        </div>
+                    </div>
+
+                    <!-- Skill Coverage -->
+                    <div class="analytics-card glass">
+                        <div class="analytics-card-header">
+                            <h3>🔧 Skill Coverage</h3>
+                            <span class="dashboard-badge">Top skills across candidates</span>
+                        </div>
+                        <div class="chart-container" style="height:280px">
+                            <canvas id="skillCoverageChart"></canvas>
+                        </div>
+                    </div>
+
+                    <!-- Experience Distribution -->
+                    <div class="analytics-card glass">
+                        <div class="analytics-card-header">
+                            <h3>💼 Experience Distribution</h3>
+                        </div>
+                        <div class="chart-container" style="height:280px">
+                            <canvas id="expDistChart"></canvas>
+                        </div>
+                    </div>
+
+                    <!-- Potential Scores -->
+                    <div class="analytics-card glass">
+                        <div class="analytics-card-header">
+                            <h3>🚀 Candidate Potential</h3>
+                        </div>
+                        <div class="chart-container" style="height:280px">
+                            <canvas id="potentialChart"></canvas>
+                        </div>
+                    </div>
+
+                    <!-- Skill Word Cloud -->
+                    <div class="analytics-card glass" style="grid-column:1/-1">
+                        <div class="analytics-card-header">
+                            <h3>☁️ Skills Word Cloud</h3>
+                            <span class="dashboard-badge">Frequency visualization</span>
+                        </div>
+                        <div class="word-cloud-container" id="wordCloudContainer">
+                            <p class="empty-hint">Analyze candidates to see skill word cloud</p>
+                        </div>
+                    </div>
+
+                    <!-- Scoring Weights Configurator -->
+                    <div class="analytics-card glass" style="grid-column:1/-1">
+                        <div class="analytics-card-header">
+                            <h3>⚙️ Custom Scoring Weights</h3>
+                            <span class="dashboard-badge">Adjust to your priorities</span>
+                        </div>
+                        <div class="weights-config" id="weightsConfig">
+                            <button class="btn-outline" onclick="resetWeights()" style="margin-bottom:1rem">🔄 Reset to Default</button>
+                        </div>
+                        <div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:1rem">
+                            <button class="btn-primary" id="rerankBtn" onclick="rerankWithWeights()" disabled>⚡ Re-rank with these weights</button>
+                            <span style="font-size:0.75rem;color:var(--text-muted);align-self:center">
+                                Re-scores the current candidates using your slider values.
+                            </span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Skill Gap Analysis -->
+                <div class="analytics-card glass" style="margin-top:1.5rem">
+                    <div class="analytics-card-header">
+                        <h3>🔄 Skill Gap Analysis</h3>
+                        <span class="dashboard-badge">Most common missing skills</span>
+                    </div>
+                    <div class="skill-gap-summary" id="skillGapSummary">
+                        <p class="empty-hint">Analyze candidates to see skill gap visualization</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ========== TAB 5: COPILOT ========== -->
+        <div class="tab-content" id="tab-copilot">
+            <div class="copilot-section">
+                <div class="copilot-header glass">
+                    <div class="copilot-header-content">
+                        <span class="copilot-avatar">🤖</span>
+                        <div>
+                            <h2>Recruiter Copilot</h2>
+                            <p>Ask questions about your candidates in natural language</p>
+                        </div>
+                    </div>
+                    <div>
+                        <button class="btn-outline" onclick="showCopilotHelp()" style="margin-right:8px">❓ Help</button>
+                        <button class="btn-outline" onclick="clearCopilot()">🗑️ Clear Chat</button>
+                    </div>
+                </div>
+
+                <div class="copilot-chat glass" id="copilotChat">
+                    <div class="copilot-message assistant">
+                        <div class="message-avatar">🤖</div>
+                        <div class="message-content">
+                            <p>Hello! I'm your AI recruiting assistant. I can help you with:</p>
+                            <ul>
+                                <li>Showing top candidates — "Show top 5 candidates"</li>
+                                <li>Finding skills — "Show candidates with Python"</li>
+                                <li>Skill gaps — "Who lacks AWS skills?"</li>
+                                <li>Comparisons — "Compare Candidate A and Candidate B"</li>
+                                <li>Hiring recommendations — "Who should we hire?"</li>
+                                <li>Candidate details — "Tell me about [name]"</li>
+                            </ul>
+                            <p><small>Analyze candidates first to enable queries. Press Enter to send.</small></p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="copilot-suggestions" id="copilotSuggestions"></div>
+
+                <div class="copilot-input glass">
+                    <input type="text" id="copilotQuery" 
+                        placeholder="Ask about candidates (e.g., 'Show top 3 candidates')..."
+                        onkeydown="if(event.key==='Enter') sendCopilotQuery()">
+                    <button class="copilot-send-btn" onclick="sendCopilotQuery()">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <line x1="22" y1="2" x2="11" y2="13"></line>
+                            <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- ========== TAB 6: BIAS-FREE ========== -->
+        <div class="tab-content" id="tab-bias">
+            <div class="bias-section">
+                <div class="bias-hero glass">
+                    <div class="bias-hero-icon">⚖️</div>
+                    <h2>Bias-Free Recruitment Module</h2>
+                    <p>Every candidate is evaluated anonymously — demographic indicators are removed before scoring to ensure fair, unbiased hiring decisions.</p>
+                </div>
+
+                <div class="bias-features-grid">
+                    <div class="bias-feature-card glass">
+                        <div class="bias-feature-icon green">✅</div>
+                        <h3>Name Removed</h3>
+                        <p>Candidate names are stripped to prevent name-based bias</p>
+                    </div>
+                    <div class="bias-feature-card glass">
+                        <div class="bias-feature-icon green">✅</div>
+                        <h3>Gender Neutral</h3>
+                        <p>Gender pronouns and indicators are removed</p>
+                    </div>
+                    <div class="bias-feature-card glass">
+                        <div class="bias-feature-icon green">✅</div>
+                        <h3>Age Blind</h3>
+                        <p>Age indicators and date of birth are stripped</p>
+                    </div>
+                    <div class="bias-feature-card glass">
+                        <div class="bias-feature-icon green">✅</div>
+                        <h3>Address Removed</h3>
+                        <p>Location and address info is masked during evaluation</p>
+                    </div>
+                </div>
+
+                <div class="bias-report glass" id="biasReport">
+                    <div class="bias-report-header">
+                        <h3>📋 Bias-Free Evaluation Report</h3>
+                        <div class="bias-badge active">🟢 Active</div>
+                    </div>
+                    <div class="bias-report-body" id="biasReportBody">
+                        <div class="empty-state">
+                            <div class="empty-icon">🔍</div>
+                            <h3>No data available</h3>
+                            <p>Analyze candidates to see bias-free evaluation results</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Status Messages -->
+        <div class="toast-container" id="toastContainer"></div>
+
+        <!-- Keyboard Shortcuts Hint -->
+        <div class="kbd-hint" id="kbdHint">
+            <span>⌨️ Shortcuts:</span>
+            <span><kbd>Ctrl</kbd>+<kbd>Enter</kbd> Analyze</span>
+            <span><kbd>Ctrl</kbd>+<kbd>1-5</kbd> Tabs</span>
+            <span><kbd>Esc</kbd> Close modals</span>
+            <span><kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>T</kbd> Theme</span>
+            <button class="btn-icon" onclick="document.getElementById('kbdHint').remove()" style="padding:2px 8px">✕</button>
+        </div>
+
+        <!-- Candidate Detail Modal -->
+        <div class="modal-overlay" id="candidateModal">
+            <div class="modal-content glass modal-lg" id="modalContent">
+                <button class="modal-close" onclick="closeModal()">✕</button>
+                <div class="modal-body-custom" id="modalBody"></div>
+            </div>
+        </div>
+
+        <!-- Comparison Modal -->
+        <div class="modal-overlay" id="compareModal">
+            <div class="modal-content glass modal-xl">
+                <div class="modal-header">
+                    <h2>🔍 Candidate Comparison</h2>
+                    <button class="modal-close" onclick="closeCompareModal()">✕</button>
+                </div>
+                <div class="modal-body" id="compareBody">
+                    <div class="compare-grid" id="compareGrid">
+                        <div class="empty-state">
+                            <div class="empty-icon">⚖️</div>
+                            <h3>Select two candidates to compare</h3>
+                            <p>Click the compare button (⚖️) on any candidate row</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Interview Questions Modal -->
+        <div class="modal-overlay" id="interviewModal">
+            <div class="modal-content glass modal-lg">
+                <div class="modal-header">
+                    <h2>🎯 AI Interview Questions</h2>
+                    <button class="modal-close" onclick="closeInterviewModal()">✕</button>
+                </div>
+                <div class="modal-body" id="interviewBody"></div>
+            </div>
+        </div>
+
+        <!-- ========== TAB 7: PRO FEATURES ========== -->
+        <div class="tab-content" id="tab-features">
+            <div class="features-dashboard">
+                <h2 class="section-title">🚀 Pro Features Suite</h2>
+                <p style="color:var(--text-muted);margin-bottom:1.5rem">Advanced AI-powered recruitment tools to supercharge your hiring process</p>
+                
+                <div class="features-grid" id="featuresGrid">
+                    <!-- ATS Resume Scoring -->
+                    <div class="feature-card glass" id="featureATS">
+                        <div class="feature-card-header">
+                            <span class="feature-icon">📄</span>
+                            <h3>ATS Resume Scoring</h3>
+                        </div>
+                        <p>Score any resume for ATS compatibility with detailed optimization tips. Get actionable feedback to improve candidate resumes.</p>
+                        <div class="feature-actions">
+                            <select class="feature-select" id="atsCandidateSelect">
+                                <option value="">Select candidate...</option>
+                            </select>
+                            <button class="btn-sm" onclick="getATSScore()">🔍 Score Resume</button>
+                        </div>
+                        <div class="feature-result" id="atsResult"></div>
+                    </div>
+
+                    <!-- Salary Prediction -->
+                    <div class="feature-card glass" id="featureSalary">
+                        <div class="feature-card-header">
+                            <span class="feature-icon">💰</span>
+                            <h3>Salary Prediction</h3>
+                        </div>
+                        <p>AI-powered salary range prediction based on skills, experience, education, and market benchmarks.</p>
+                        <div class="feature-actions">
+                            <select class="feature-select" id="salaryCandidateSelect">
+                                <option value="">Select candidate...</option>
+                            </select>
+                            <button class="btn-sm" onclick="getSalaryPrediction()">💵 Predict Salary</button>
+                        </div>
+                        <div class="feature-result" id="salaryResult"></div>
+                    </div>
+
+                    <!-- Career Path -->
+                    <div class="feature-card glass" id="featureCareer">
+                        <div class="feature-card-header">
+                            <span class="feature-icon">🧭</span>
+                            <h3>Career Path Prediction</h3>
+                        </div>
+                        <p>Predict career trajectory with milestones, timelines, and skill development plans for each candidate.</p>
+                        <div class="feature-actions">
+                            <select class="feature-select" id="careerCandidateSelect">
+                                <option value="">Select candidate...</option>
+                            </select>
+                            <button class="btn-sm" onclick="getCareerPath()">🔮 Predict Path</button>
+                        </div>
+                        <div class="feature-result" id="careerResult"></div>
+                    </div>
+
+                    <!-- Email Drafts -->
+                    <div class="feature-card glass" id="featureEmail">
+                        <div class="feature-card-header">
+                            <span class="feature-icon">✉️</span>
+                            <h3>Email Draft Generator</h3>
+                        </div>
+                        <p>Generate professional recruiter emails — interview invites, offers, rejections, follow-ups, and more.</p>
+                        <div class="feature-actions">
+                            <select class="feature-select" id="emailCandidateSelect">
+                                <option value="">Select candidate...</option>
+                            </select>
+                            <select class="feature-select" id="emailTypeSelect">
+                                <option value="interview_invite">Interview Invite</option>
+                                <option value="offer_letter">Offer Letter</option>
+                                <option value="rejection">Rejection</option>
+                                <option value="follow_up">Follow Up</option>
+                                <option value="assessment">Assessment</option>
+                            </select>
+                            <button class="btn-sm" onclick="generateEmail()">✉️ Generate</button>
+                        </div>
+                        <div class="feature-result" id="emailResult"></div>
+                    </div>
+
+                    <!-- Diversity Analytics -->
+                    <div class="feature-card glass" id="featureDiversity">
+                        <div class="feature-card-header">
+                            <span class="feature-icon">🌈</span>
+                            <h3>Diversity Analytics</h3>
+                        </div>
+                        <p>Analyze diversity across your candidate pool — educational, skill, experience, and domain diversity metrics.</p>
+                        <div class="feature-actions">
+                            <button class="btn-sm" onclick="getDiversityAnalysis()">📊 Analyze Diversity</button>
+                        </div>
+                        <div class="feature-result" id="diversityResult"></div>
+                    </div>
+
+                    <!-- Team Fit -->
+                    <div class="feature-card glass" id="featureTeamFit">
+                        <div class="feature-card-header">
+                            <span class="feature-icon">🤝</span>
+                            <h3>Team Fit Analysis</h3>
+                        </div>
+                        <p>Evaluate how well a candidate fits different team cultures — startup, enterprise, research, consulting, or product.</p>
+                        <div class="feature-actions">
+                            <select class="feature-select" id="teamFitCandidateSelect">
+                                <option value="">Select candidate...</option>
+                            </select>
+                            <select class="feature-select" id="teamCultureSelect">
+                                <option value="startup">🚀 Startup</option>
+                                <option value="enterprise">🏢 Enterprise</option>
+                                <option value="research">🔬 Research</option>
+                                <option value="consulting">💼 Consulting</option>
+                                <option value="product">📱 Product</option>
+                            </select>
+                            <button class="btn-sm" onclick="getTeamFit()">🤝 Analyze Fit</button>
+                        </div>
+                        <div class="feature-result" id="teamFitResult"></div>
+                    </div>
+
+                    <!-- Analysis History -->
+                    <div class="feature-card glass" id="featureHistory">
+                        <div class="feature-card-header">
+                            <span class="feature-icon">📚</span>
+                            <h3>Analysis History</h3>
+                        </div>
+                        <p>View and manage past analysis runs. Restore previous results and track recruitment analytics over time.</p>
+                        <div class="feature-actions">
+                            <button class="btn-sm" onclick="loadHistory()">📚 View History</button>
+                            <button class="btn-sm" onclick="clearHistory()" style="color:var(--danger)">🗑️ Clear</button>
+                        </div>
+                        <div class="feature-result" id="historyResult"></div>
+                    </div>
+
+                    <!-- Multi-Job Analysis -->
+                    <div class="feature-card glass" id="featureMultiJob">
+                        <div class="feature-card-header">
+                            <span class="feature-icon">🎯</span>
+                            <h3>Multi-Job Batch Analysis</h3>
+                        </div>
+                        <p>Compare candidate pools across multiple roles. Identify talent overlap and prioritize hiring needs.</p>
+                        <div class="role-selector" id="multiJobRoles">
+                            <label class="role-option"><input type="checkbox" value="data_scientist" checked> <span>📊 Data Scientist</span></label>
+                            <label class="role-option"><input type="checkbox" value="ml_engineer"> <span>🤖 ML Engineer</span></label>
+                            <label class="role-option"><input type="checkbox" value="full_stack"> <span>💻 Full Stack Developer</span></label>
+                            <label class="role-option"><input type="checkbox" value="product_manager"> <span>🗂️ Product Manager</span></label>
+                            <label class="role-option"><input type="checkbox" value="business_analyst"> <span>📈 Business Analyst</span></label>
+                        </div>
+                        <div class="feature-actions">
+                            <button class="btn-sm" onclick="runMultiJobAnalysis()">📊 Run Analysis</button>
+                        </div>
+                        <div class="feature-result" id="multiJobResult"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <footer class="footer">
+            <div class="footer-content">
+                <div class="footer-brand">
+                    <span class="footer-logo">Candidate Ranking System</span>
+                </div>
+                <div class="footer-links">
+                    <span>AI-powered recruitment intelligence</span>
+                    <span class="footer-sep">|</span>
+                    <span>11 AI Modules • 7 Scoring Dimensions • Bias-Free • Explainable AI</span>
+                </div>
+            </div>
+        </footer>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

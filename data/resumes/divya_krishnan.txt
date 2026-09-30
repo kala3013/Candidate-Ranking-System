@@ -1,0 +1,38 @@
+Candidate Name: Divya Krishnan
+Email: divya.krishnan@email.com
+Phone: +91-9876543218
+
+Summary:
+AI Research Scientist with 5 years of experience in deep learning research and development. Published 8+ papers in top-tier conferences. Expertise in generative AI and LLMs.
+
+Experience:
+AI Research Scientist at DeepMind AI (2020-Present)
+- Conducted research on large language model alignment and fine-tuning
+- Developed novel approaches for few-shot learning in NLP tasks
+- Published 4 papers at NeurIPS and ICLR
+- Collaborated on open-source LLM evaluation frameworks
+
+NLP Researcher at LanguageTech (2018-2020)
+- Built multilingual NER systems for 15+ languages
+- Developed cross-lingual transfer learning methods
+- Created benchmarks for low-resource language models
+
+Education:
+PhD in AI - IIT Madras (2018)
+M.Tech in Computer Science - IIT Madras (2014)
+B.Tech in Computer Science - Anna University (2012)
+
+Skills:
+Python, PyTorch, JAX, TensorFlow, Transformers, BERT, GPT, LLMs, LangChain,
+NLP, Deep Learning, Reinforcement Learning, RLHF, Prompt Engineering, RAG,
+SQL, PostgreSQL, AWS, Docker, Git, Research, Scientific Writing, LaTeX,
+Hugging Face, Weights & Biases, MLflow
+
+Certifications:
+- TensorFlow Developer Certificate
+- Stanford Online: CS224N NLP
+
+Projects:
+Developed novel fine-tuning techniques for instruction-following LLMs.
+Built a retrieval-augmented generation system for medical question answering.
+Created benchmark datasets for evaluating LLM reasoning capabilities.

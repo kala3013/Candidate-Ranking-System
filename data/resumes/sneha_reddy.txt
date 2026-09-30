@@ -1,0 +1,36 @@
+Candidate Name: Sneha Reddy
+Email: sneha.reddy@email.com
+Phone: +91-9876543216
+
+Summary:
+Data Scientist with 4 years of experience in NLP and recommendation systems. Strong background in building production ML systems for e-commerce platforms.
+
+Experience:
+Data Scientist at ShopEase Inc (2020-Present)
+- Built product recommendation engine using collaborative filtering and matrix factorization
+- Developed NLP-based search relevance system improving CTR by 25%
+- Implemented real-time personalization pipeline using Kafka and Spark Streaming
+- Created A/B testing framework for ML model evaluation
+
+Junior ML Engineer at RetailAI (2019-2020)
+- Developed customer segmentation models using clustering algorithms
+- Built demand forecasting system with 94% accuracy
+- Created automated data quality monitoring dashboards
+
+Education:
+M.Tech in Data Science - BITS Pilani (2019)
+B.Tech in Computer Science - Hyderabad University (2017)
+
+Skills:
+Python, TensorFlow, PyTorch, Scikit-learn, NLP, Recommendation Systems, Collaborative Filtering,
+SQL, PostgreSQL, MongoDB, AWS, Kafka, Spark, Docker, Git, A/B Testing,
+Data Visualization, Pandas, NumPy, MLflow, FastAPI
+
+Certifications:
+- AWS Certified Machine Learning
+- TensorFlow Developer Certificate
+
+Projects:
+Built a real-time product recommendation system handling 10M+ daily users.
+Developed a semantic search engine for product discovery.
+Created an automated ML pipeline for model retraining and monitoring.

@@ -1,0 +1,33 @@
+Candidate Name: Karan Mehta
+Email: karan.mehta@email.com
+Phone: +91-9876543219
+
+Summary:
+Data Analyst with 2.5 years of experience in business analytics and reporting. Proficient in SQL, Tableau, and Python for data-driven decision making.
+
+Experience:
+Data Analyst at MarketInsights Ltd (2022-Present)
+- Created executive dashboards tracking 50+ KPIs using Tableau and Power BI
+- Conducted market research and competitive analysis for product strategy
+- Automated weekly reporting using Python scripts reducing manual effort by 80%
+
+Junior Analyst at ConsultPro (2021-2022)
+- Assisted in building data models for client engagement analysis
+- Performed data cleaning and validation for large datasets
+- Created presentations and visualizations for client meetings
+
+Education:
+MBA in Business Analytics - ISB Hyderabad (2022)
+B.Com in Statistics - St. Xavier's College Mumbai (2019)
+
+Skills:
+Python, SQL, Tableau, Power BI, Excel, Statistics, A/B Testing,
+Data Analysis, Data Visualization, Pandas, NumPy, Git,
+Business Strategy, Market Research, Presentation Skills
+
+Certifications:
+- Google Data Analytics Professional Certificate
+
+Projects:
+Built a comprehensive sales analytics dashboard for a retail client.
+Created automated reporting system for monthly business reviews.

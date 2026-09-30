@@ -1,0 +1,190 @@
+INTERNSHIP REVIEW PREPARATION
+AI-POWERED CANDIDATE RANKING SYSTEM
+
+Purpose
+=======
+This document is a study guide and speaker script for an approximately 10-minute internship review presentation. It describes the current candidate-ranking application based on its implementation and project documentation.
+
+The PowerPoint deck was not available in the workspace when this guide was prepared, so this is organized as a practical presentation sequence rather than an exact slide-by-slide transcription. Align the section titles with the slides in your deck before presenting.
+
+PROJECT SUMMARY
+===============
+The project is an independently developed recruitment-support application. It compares candidate resumes with a job description, calculates explainable fit scores, ranks candidates, and provides recruiter-facing insights. It is a decision-support tool. A recruiter must review the results and make the final hiring decision.
+
+10-MINUTE SPEAKER SCRIPT
+========================
+
+SLIDE 1 - TITLE AND INTRODUCTION (30 seconds)
+---------------------------------------------
+Good morning. My project is an AI-assisted Candidate Ranking System for recruitment. It helps recruiters compare a job description with multiple candidate resumes, rank candidates using job-related criteria, and review explanations for those rankings. The aim is to support initial screening, not to replace the recruiter's final decision.
+
+SLIDE 2 - PROBLEM STATEMENT (50 seconds)
+----------------------------------------
+Recruiters may receive many resumes for one role. Reviewing every application manually takes time, and different reviewers may assess similar profiles differently. Simple keyword searches can also miss qualified candidates when their resume describes a skill or experience using different wording from the job description.
+
+This project addresses those challenges by extracting relevant information from job descriptions and resumes, comparing candidate profiles across several criteria, and presenting ranked results with supporting details.
+
+SLIDE 3 - OBJECTIVES (40 seconds)
+---------------------------------
+The main objective is to make initial candidate screening faster and more consistent. The system accepts a job description and multiple resumes, extracts skills and other relevant details, calculates a job-fit score, and ranks the candidates.
+
+It also provides supporting features such as skill-gap analysis, interview-question suggestions, candidate summaries, a bias-audit report, analytics, and export options.
+
+SLIDE 4 - OVERALL SYSTEM FLOW (1 minute 15 seconds)
+---------------------------------------------------
+The recruiter provides a job description and candidate resumes through the web interface. The backend accepts the input through Flask routes. PDF, DOCX, and TXT files are converted to text using document-reading libraries.
+
+The parser extracts information such as technical skills, years of experience, education, certifications, project details, and selected behavioral indicators. The job description is parsed similarly to identify its skills and requirements.
+
+The ranking engine compares each candidate profile with the job profile. The scoring module calculates component scores and combines them into a final score. Candidates are sorted from highest to lowest score, and the system generates a human-readable reason for each result.
+
+After ranking, additional modules calculate skill gaps, potential indicators, interview questions, candidate summaries, and bias-audit information. The dashboard displays the results and supports analysis, comparison, shortlisting, and exporting.
+
+Flow to remember:
+Recruiter input -> Flask backend -> document text extraction -> profile parsing -> semantic comparison and weighted scoring -> ranking and explanations -> dashboard and supporting reports.
+
+SLIDE 5 - AI AND SCORING (1 minute 20 seconds)
+----------------------------------------------
+The system uses a pre-trained Sentence-BERT model called all-MiniLM-L6-v2. It converts text into numerical embeddings. The system compares job-description and candidate text using cosine similarity. This helps measure similarity in meaning, not only exact word overlap.
+
+The final score is a weighted combination of seven dimensions:
+
+Final score =
+  0.35 * skill match
++ 0.20 * experience match
++ 0.15 * project relevance
++ 0.15 * semantic similarity
++ 0.05 * education
++ 0.05 * certifications
++ 0.05 * behavioral signals
+
+The default weights can be customized. The component scores and weights are returned with the final score, and the system generates a human-readable explanation. The project does not train a new language model; it uses a pre-trained embedding model alongside project-specific parsing and scoring logic.
+
+SLIDE 6 - MAIN FEATURES (55 seconds)
+------------------------------------
+The dashboard lets a recruiter upload a job description and multiple resumes, or try the system with sample data. Results include candidate rankings, score breakdowns, and explanations. Recruiters can view analytics, compare candidates, shortlist profiles, and export results.
+
+Other modules support skill-gap analysis, candidate-potential indicators, interview-question generation, candidate summaries, and a bias-audit report. These tools help recruiters investigate the results; the rank is not an automatic hiring decision.
+
+SLIDE 7 - TECHNOLOGY STACK (50 seconds)
+---------------------------------------
+The backend is written in Python and uses Flask to provide the web application and API endpoints. Flask-CORS supports communication from the browser interface.
+
+Sentence-Transformers and PyTorch run the semantic embedding model. Scikit-learn calculates cosine similarity, while NumPy and Pandas support scoring and data handling. The parser uses regular expressions and a skills vocabulary, with pdfplumber, PyPDF2, and python-docx for document text extraction.
+
+The frontend uses HTML, CSS, and JavaScript, with Chart.js for dashboard visualizations. The current project does not use a central relational database for the main workflow; it uses files for inputs and outputs and browser local storage for some interface preferences and shortlist data.
+
+SLIDE 8 - DEMONSTRATION (1 minute 20 seconds)
+---------------------------------------------
+For the demonstration, I will first use the sample-data option so the workflow can be shown quickly. I will point out the job-description and candidate inputs, then show how the system produces a ranked list.
+
+I will explain that the final score is supported by component scores such as skills, experience, project relevance, and semantic similarity. Then I will open a candidate's details to show the explanation and supporting insights. I can also demonstrate skill gaps or interview questions and finish by showing an export option.
+
+The key point is that the dashboard provides evidence and comparisons for a recruiter to review. It does not make the final hiring decision.
+
+SLIDE 9 - BENEFITS, LIMITATIONS, AND RESPONSIBLE USE (1 minute)
+----------------------------------------------------------------
+The system can reduce repetitive first-pass screening work, apply the same configured scoring dimensions across a candidate pool, and make candidate comparisons easier to review. Semantic similarity can also help identify relevant experience that exact keyword searches might miss.
+
+There are limitations. Resume parsing depends on document quality and recognized patterns, so it may miss unfamiliar wording or poorly formatted documents. The default scoring weights are configurable but should be validated against real hiring requirements. Semantic similarity is not proof of ability, and a score can reflect limitations in the input data or model.
+
+The bias feature should be described carefully. The system creates a separate audit using detected and masked indicators, but the ranking is calculated before that audit. Therefore, it does not prove that the ranking itself is bias-free. Human review and fairness testing are still necessary.
+
+SLIDE 10 - FUTURE WORK AND CONCLUSION (40 seconds)
+--------------------------------------------------
+Future improvements could include more robust resume parsing, validation of scoring weights using recruiter feedback, systematic fairness testing, stronger data protection, and secure persistent storage. The system could also be evaluated with a larger, representative dataset to measure ranking quality and consistency.
+
+To conclude, this project demonstrates an end-to-end recruitment-support workflow: document input, structured extraction, semantic comparison, explainable scoring, candidate ranking, and recruiter-facing insights. It is designed to make screening more efficient while keeping the recruiter responsible for the final decision.
+
+TECHNICAL POINTS TO REMEMBER
+============================
+
+1. Parsing
+   - Supports PDF, DOCX, and TXT input.
+   - Uses document-reading libraries to extract text.
+   - Uses a predefined technical-skills vocabulary and regular expressions to find fields such as skills, experience, and education.
+   - Behavioral indicators are based on patterns in the resume text.
+
+2. Semantic matching
+   - Uses the pre-trained all-MiniLM-L6-v2 Sentence-BERT model.
+   - Produces 384-dimensional embeddings.
+   - Compares embeddings using cosine similarity.
+   - The model is used for inference; this project does not fine-tune it on a custom hiring dataset.
+   - TF-IDF is a fallback if the Sentence-Transformer model cannot be loaded.
+
+3. Scoring and ranking
+   - Seven weighted dimensions determine the final score.
+   - Candidates are sorted by final score in descending order.
+   - The scorer returns the component scores and generates a written explanation.
+   - Profile completeness is calculated and returned as a separate metric, but it is not included in the final weighted score.
+
+4. Supporting features
+   - Skill-gap analysis compares required and candidate skills.
+   - Interview questions are generated from the job and candidate profiles.
+   - Candidate summaries, analytics, comparison, shortlisting, and exports support recruiter review.
+
+5. Responsible use
+   - The system supports, but does not replace, human judgment.
+   - The bias-audit report is generated after ranking; it does not rerun the score on an anonymized profile.
+   - Text-pattern masking can miss personal or indirect indicators, so the feature cannot guarantee fair outcomes.
+   - Scoring weights and parsing results should be reviewed for the intended role and dataset.
+
+TECHNOLOGY PURPOSE
+==================
+Python: Backend logic and analysis modules.
+Flask: Web server and API endpoints.
+Flask-CORS: Browser-to-backend cross-origin communication.
+Sentence-Transformers: Loading the pre-trained Sentence-BERT model.
+PyTorch: Runtime support for the embedding model.
+Scikit-learn: Cosine similarity and supporting machine-learning utilities.
+NumPy and Pandas: Numerical and tabular data handling.
+pdfplumber and PyPDF2: PDF text extraction.
+python-docx: DOCX text extraction.
+HTML, CSS, and JavaScript: Browser-based dashboard and interactions.
+Chart.js: Dashboard charts and analytics visualizations.
+Browser local storage: Selected frontend preferences and shortlist persistence.
+
+LIKELY REVIEW QUESTIONS
+=======================
+
+Q: Why use Sentence-BERT instead of only keyword matching?
+A: Keyword matching requires exact or similar wording. Sentence-BERT converts text into embeddings so the system can compare semantic similarity. The system still uses explicit skill matching as a separate scoring dimension.
+
+Q: Does the system train its own AI model?
+A: No. It uses the pre-trained all-MiniLM-L6-v2 model to generate embeddings. The parsing and scoring logic are implemented in this project.
+
+Q: How is the candidate ranking calculated?
+A: Each candidate receives scores across seven dimensions. The system multiplies each component by its configured weight, sums the results, sorts candidates by final score, and generates an explanation.
+
+Q: Can the system guarantee unbiased hiring?
+A: No. It includes a separate bias-audit feature that detects and masks selected indicators, but the ranking itself is calculated before that audit. The results require human review and fairness evaluation.
+
+Q: What are the main limitations?
+A: Resume parsing depends on document quality and recognized patterns; the skills vocabulary may not cover every term; and scoring weights need validation for each hiring context. The system should not make hiring decisions without human review.
+
+Q: What would you improve next?
+A: I would validate the ranking with a representative dataset and recruiter feedback, improve parsing for varied resume formats, perform fairness testing, and strengthen secure storage and access control.
+
+Q: What makes the ranking explainable?
+A: The system returns the score breakdown for each candidate and generates a human-readable explanation using factors such as skill overlap, experience, projects, behavioral evidence, and semantic similarity.
+
+REFERENCES
+==========
+
+1. Reimers, N. and Gurevych, I. (2019). Sentence-BERT: Sentence Embeddings using Siamese BERT-Networks. EMNLP-IJCNLP.
+2. Raghavan, M., Barocas, S., Kleinberg, J., and Levy, K. (2020). Mitigating Bias in Algorithmic Hiring: Evaluating Claims and Practices. ACM Conference on Fairness, Accountability, and Transparency.
+3. National Institute of Standards and Technology (2023). Artificial Intelligence Risk Management Framework (AI RMF 1.0).
+4. Sentence-Transformers documentation: https://www.sbert.net/
+5. Flask documentation: https://flask.palletsprojects.com/
+6. Scikit-learn documentation for cosine similarity: https://scikit-learn.org/stable/modules/metrics.html#cosine-similarity
+
+FINAL PRESENTATION REMINDERS
+============================
+- Explain the workflow in order: input, extraction, matching, scoring, ranking, and recruiter review.
+- Explain that the embedding model is pre-trained; do not claim it was trained from scratch for this project.
+- State the seven scoring weights accurately.
+- Do not say that profile completeness contributes to the final score; it is currently a separate returned metric.
+- Call the fairness feature a bias audit, not a guarantee of bias-free ranking.
+- Use sample data for the demo if time is limited.
+- Present the system as recruiter decision support, not automated hiring.
+- Keep the explanation tied to the features visible in the presentation deck and running application.

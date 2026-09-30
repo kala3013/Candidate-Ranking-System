@@ -1,0 +1,36 @@
+# Logs
+*.log
+server.log
+run_stdout.log
+run_stderr.log
+verify_out.txt
+
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.venv/
+venv/
+env/
+
+# Environment / secrets
+.env
+.env.*
+
+# Generated analysis artefacts
+data/hackathon/
+data/outputs/*.csv
+data/uploads/*
+!data/uploads/.gitkeep
+
+# OS / editor
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+
+# Frontend
+node_modules/
+
+# Tooling caches
+.deepeval/
